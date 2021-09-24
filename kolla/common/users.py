@@ -337,5 +337,9 @@ USERS = {
     'opensearch-dashboards-user': {
         'uid': 42492,
         'gid': 42492,
+    },
+    'skyline-user': {
+        'uid': 42491,
+        'gid': 42491,
     }
 }

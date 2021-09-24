@@ -53,6 +53,7 @@ redis,T,C,C
 sahara,C,C,C
 senlin,C,C,C
 skydive,C,C,C
+skyline,C,C,C
 solum,C,C,C
 swift,T,T,C
 tacker,T,C,C
