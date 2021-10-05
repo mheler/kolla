@@ -1,0 +1,36 @@
+FROM {{ namespace }}/{{ infra_image_prefix }}prometheus-base:{{ tag }}
+{% block labels %}
+LABEL maintainer="{{ maintainer }}" name="{{ image_name }}" build-date="{{ build_date }}"
+{% endblock %}
+
+{% block prometheus_ovs_exporter_header %}{% endblock %}
+
+{% block prometheus_ovs_exporter_repository_version %}
+
+{% if base_arch == 'x86_64' %}
+ARG ovs_arch=amd64
+{% elif base_arch == 'aarch64' %}
+ARG ovs_arch=arm64
+{% endif %}
+
+ARG prometheus_ovs_version=1.0.5
+ARG prometheus_ovs_cksum_url=https://github.com/greenpau/ovs_exporter/releases/download/v${prometheus_ovs_version}/checksums.txt
+ARG ovs_exporter_tgz=ovs-exporter_${prometheus_ovs_version}_linux_${ovs_arch}.tar.gz
+ARG prometheus_ovs_url=https://github.com/greenpau/ovs_exporter/releases/download/v${prometheus_ovs_version}/${ovs_exporter_tgz}
+{% endblock %}
+
+{% block prometheus_ovs_exporter_install %}
+
+RUN curl -Lo /tmp/${ovs_exporter_tgz} ${prometheus_ovs_url} \
+    && curl -Lo /tmp/checksums.txt ${prometheus_ovs_cksum_url} \
+    && cd /tmp \
+    && sha256sum --ignore-missing -c /tmp/checksums.txt \
+    && tar xvf /tmp/${ovs_exporter_tgz} -C /opt/ \
+    && rm -f /tmp/${ovs_exporter_tgz} \
+    && rm -f /tmp/checksums.txt
+{% endblock %}
+
+{% block prometheus_ovs_exporter_footer %}{% endblock %}
+{% block footer %}{% endblock %}
+
+USER prometheus

@@ -1,0 +1,4 @@
+---
+features:
+  - |
+    ``prometheus-ovs-exporter`` image has been added.
