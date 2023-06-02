@@ -13,6 +13,7 @@ LABEL maintainer="{{ maintainer }}" name="{{ image_name }}" build-date="{{ build
 {% if base_package_type == 'rpm' %}
 
     {% set neutron_base_packages = [
+        'bridge-utils',
         'conntrack-tools',
         'dnsmasq',
         'dnsmasq-utils',
@@ -32,6 +33,7 @@ LABEL maintainer="{{ maintainer }}" name="{{ image_name }}" build-date="{{ build
 {% elif base_package_type == 'deb' %}
 
     {% set neutron_base_packages = [
+        'bridge-utils',
         'conntrack',
         'dnsmasq',
         'dnsmasq-utils',
@@ -54,11 +56,13 @@ LABEL maintainer="{{ maintainer }}" name="{{ image_name }}" build-date="{{ build
 {{ macros.install_packages(neutron_base_packages | customizable("packages")) }}
 
 ADD neutron-base-archive /neutron-base-source
+ADD additions-archive /
 ADD plugins-archive /
 
 {% set neutron_base_pip_packages = [
     '/neutron',
-    'oslo-vmware'
+    'oslo-vmware',
+    '/tap-as-a-service'
 ] %}
 
 {% set neutron_base_plugins_pip_packages = [
@@ -69,6 +73,8 @@ COPY neutron_sudoers /etc/sudoers.d/kolla_neutron_sudoers
 COPY extend_start.sh /usr/local/bin/kolla_extend_start
 
 RUN ln -s neutron-base-source/* neutron \
+    && sed -i /^tap-as-a-service=/d /requirements/upper-constraints.txt \
+    && ln -s /additions/*tap-as-a-service* /tap-as-a-service \
     && {{ macros.install_pip(neutron_base_pip_packages | customizable("pip_packages")) }} \
     && mkdir -p /etc/neutron \
     && cp -r /neutron/etc/* /etc/neutron/ \

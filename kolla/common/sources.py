@@ -212,6 +212,10 @@ SOURCES = {
         'type': 'url',
         'location': ('$tarballs_base/openstack/neutron/'
                      'neutron-${openstack_branch}.tar.gz')},
+    'neutron-base-additions-tap-as-a-service': {
+        'type': 'url',
+        'location': ('$tarballs_base/openstack/tap-as-a-service/'
+                     'tap-as-a-service-${openstack_branch}.tar.gz')},
     'neutron-base-plugin-networking-baremetal': {
         'type': 'url',
         'location': ('$tarballs_base/openstack/networking-baremetal/'
