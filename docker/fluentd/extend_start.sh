@@ -6,6 +6,12 @@
 # Also set the setgid permission on the /var/log/kolla directory so that new
 # files and sub-directories in that directory inherit its group id ("kolla").
 
+if $(sudo capsh --has-p=cap_dac_read_search > /dev/null); then
+    sudo /opt/fluent/bin/fluent-cap-ctl --add dac_read_search
+else
+    sudo setcap cap_dac_read_search-ep /opt/fluent/bin/ruby
+fi
+
 if [ ! -d /var/log/kolla ]; then
     mkdir -p /var/log/kolla
 fi

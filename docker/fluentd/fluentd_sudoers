@@ -6,3 +6,7 @@
 %kolla ALL=(root) NOPASSWD: /bin/chmod 2775 /var/log/kolla, /usr/bin/chmod 2775 /var/log/kolla
 %kolla ALL=(root) NOPASSWD: /bin/chmod 2775 /var/lib/fluentd, /usr/bin/chmod 2775 /var/lib/fluentd
 %kolla ALL=(root) NOPASSWD: /bin/chmod 2775 /var/lib/td-agent, /usr/bin/chmod 2775 /var/lib/td-agent
+# Add and remove dac_read_search capability from fluentd
+%kolla ALL=(root) NOPASSWD: /opt/fluent/bin/fluent-cap-ctl --add dac_read_search
+%kolla ALL=(root) NOPASSWD: /usr/sbin/setcap cap_dac_read_search-ep /opt/fluent/bin/ruby
+%kolla ALL=(root) NOPASSWD: /usr/sbin/capsh --has-p=cap_dac_read_search

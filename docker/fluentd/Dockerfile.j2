@@ -18,6 +18,7 @@ LABEL maintainer="{{ maintainer }}" name="{{ image_name }}" build-date="{{ build
         'gcc-c++',
         'make',
         'fluent-package',
+        'libcap-ng-devel'
     ] %}
 
 {% elif base_package_type == 'deb' %}
@@ -26,6 +27,8 @@ LABEL maintainer="{{ maintainer }}" name="{{ image_name }}" build-date="{{ build
         'g++',
         'make',
         'fluent-package',
+        'libcap-ng-dev',
+        'pkg-config'
     ] %}
 
 {% endif %}
@@ -49,6 +52,7 @@ COPY extend_start.sh /usr/local/bin/kolla_extend_start
     'fluent-plugin-grok-parser',
     'fluent-plugin-prometheus',
     'fluent-plugin-rewrite-tag-filter',
+    'capng_c'
 ] %}
 
 {{ macros.install_fluent_plugins(fluentd_plugins | customizable("plugins")) }}
