@@ -14,3 +14,9 @@ if [[ $(stat -c %a /var/log/kolla/libvirt) != "755" ]]; then
     chmod 755 /var/log/kolla/libvirt
     chmod 644 /var/log/kolla/libvirt/libvirtd.log
 fi
+
+if [[ ! -e "/var/log/kolla/libvirt/qemu" ]]; then
+    mkdir -p /var/log/kolla/libvirt/qemu
+    chown root:42400 /var/log/kolla/libvirt/qemu
+    chmod 2755 /var/log/kolla/libvirt/qemu
+fi

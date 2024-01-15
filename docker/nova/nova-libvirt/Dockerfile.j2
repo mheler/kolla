@@ -96,5 +96,7 @@ RUN rm -f /etc/libvirt/qemu/networks/default.xml /etc/libvirt/qemu/networks/auto
 COPY extend_start.sh /usr/local/bin/kolla_extend_start
 RUN chmod 644 /usr/local/bin/kolla_extend_start
 
+RUN rm -rf /var/log/libvirt && ln -s /var/log/kolla/libvirt /var/log/libvirt
+
 {% block nova_libvirt_footer %}{% endblock %}
 {% block footer %}{% endblock %}
