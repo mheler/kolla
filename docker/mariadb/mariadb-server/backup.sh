@@ -11,7 +11,8 @@ backup_full() {
         --defaults-file=/etc/mysql/my.cnf \
         --backup \
         --stream=xbstream \
-        --history=$LAST_FULL_DATE | gzip > \
+        --parallel=4 \
+        --history=$LAST_FULL_DATE | pigz -c -p 4 > \
         $BACKUP_DIR/mysqlbackup-$(date +%d-%m-%Y-%s).qp.xbc.xbs.gz
     echo $LAST_FULL_DATE > $BACKUP_DIR/last_full_date
 }
@@ -29,8 +30,9 @@ backup_incremental() {
         --defaults-file=/etc/mysql/my.cnf \
         --backup \
         --stream=xbstream \
+        --parallel=4 \
         --incremental-history-name=$LAST_FULL_DATE \
-        --history=$LAST_FULL_DATE | gzip > \
+        --history=$LAST_FULL_DATE | pigz -c -p 4 > \
         $BACKUP_DIR/incremental-$(date +%H)-mysqlbackup-$(date +%d-%m-%Y-%s).qp.xbc.xbs.gz
 }
 
