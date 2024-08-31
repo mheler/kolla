@@ -1,9 +1,9 @@
 # For non-x86 architectures we use sources.list.ubuntu.<arch>
 
 # Default repos
-deb mirror://mirrors.ubuntu.com/mirrors.txt jammy main universe
-deb mirror://mirrors.ubuntu.com/mirrors.txt jammy-updates main universe
-deb mirror://mirrors.ubuntu.com/mirrors.txt jammy-security main universe
+deb http://archive.ubuntu.com/ubuntu/ jammy main universe
+deb http://archive.ubuntu.com/ubuntu/ jammy-updates main universe
+deb http://archive.ubuntu.com/ubuntu/ jammy-security main universe
 
 # Backports have a lower priority and must be explicitly installed to be used
 deb http://archive.ubuntu.com/ubuntu/ jammy-backports main universe
