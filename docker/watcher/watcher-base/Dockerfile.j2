@@ -17,7 +17,10 @@ ADD watcher-base-archive /watcher-base-source
 
 COPY extend_start.sh /usr/local/bin/kolla_extend_start
 
+# NOTE(supamatt): remove python-observabilityclient constant for 
+# upper-contraints.txt file. Otherwise it will fail.
 RUN ln -s watcher-base-source/* watcher \
+    && {{ macros.upper_constraints_remove("python-observabilityclient") }} \ 
     && {{ macros.install_pip(watcher_base_pip_packages | customizable("pip_packages")) }} \
     && mkdir -p /etc/watcher \
     && cp -r /watcher/etc/watcher/* /etc/watcher/ \
